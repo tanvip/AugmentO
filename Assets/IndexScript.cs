@@ -19,7 +19,15 @@ public class IndexScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        /*if(InitScript.activeObj[0] == null) {}
+        else {
+        	Debug.Log("in start");
+        	InitScript.activeObj[0].SetActive(true);
+        }
+        if(InitScript.activeObj[1] == null) {}
+        else {
+        	InitScript.activeObj[1].SetActive(true);
+        }*/
 		parentImageTarget = GameObject.Find("ImageTarget");
 		//Debug.Log(parentImageTarget.transform.GetChild(8).gameObject.transform.GetChild(0));
 		canvas = parentImageTarget.transform.GetChild(8).gameObject;
@@ -66,8 +74,8 @@ public class IndexScript : MonoBehaviour {
         if(InitScript.activeObj[0]==null) {
         	InitScript.activeObj[0] = car1;
         	Debug.Log(InitScript.activeObj[0]);
+        	car1MethodBtn.SetActive(true);
        	    car1.SetActive(true);
-       	    car1MethodBtn.SetActive(true);
        	    infoText.GetComponent<TextMesh>().text = "Car car1 = new Car()";
        } else {
        		InitScript.activeObj[1] = car2;
@@ -100,6 +108,10 @@ public class IndexScript : MonoBehaviour {
        	  	zombie2.SetActive(true);
        	  	infoText.GetComponent<TextMesh>().text = "Zombie zombie2 = new Zombie()";
        }
+	}
+
+	public void car1MethodControls() {
+		
 	}
 
 	public void car1Accelerate() {
