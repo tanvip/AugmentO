@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IndexScript : MonoBehaviour {
-	private GameObject[] activeObj = new GameObject[] { null, null};
+	//private GameObject[] activeObj = new GameObject[] { null, null};
     private GameObject car1;
     private GameObject car2;
     private GameObject butterfly1;
@@ -11,22 +12,31 @@ public class IndexScript : MonoBehaviour {
     private GameObject zombie1;
     private GameObject zombie2;
     private GameObject infoText;
+    private GameObject parentImageTarget;
+    private GameObject canvas;
+    private GameObject car1MethodBtn;
+    public const string NewLine="\n";
 
 	// Use this for initialization
 	void Start () {
-		car1 = GameObject.Find("car1");
-		car2 = GameObject.Find("car2");
-		butterfly1 = GameObject.Find("butterfly1");
-		butterfly2 = GameObject.Find("butterfly2");
-		zombie1 = GameObject.Find("zombie1");
-		zombie2 = GameObject.Find("zombie2");
+
+		parentImageTarget = GameObject.Find("ImageTarget");
+		//Debug.Log(parentImageTarget.transform.GetChild(8).gameObject.transform.GetChild(0));
+		canvas = parentImageTarget.transform.GetChild(8).gameObject;
+		car1MethodBtn = canvas.transform.GetChild(6).gameObject;
+		car1 = parentImageTarget.transform.GetChild(5).gameObject;
+		car2 = parentImageTarget.transform.GetChild(6).gameObject;
+		butterfly1 = parentImageTarget.transform.GetChild(3).gameObject;
+		butterfly2 = parentImageTarget.transform.GetChild(4).gameObject;
+		zombie1 = parentImageTarget.transform.GetChild(1).gameObject;
+		zombie2 = parentImageTarget.transform.GetChild(2).gameObject;
 		infoText = GameObject.Find("infoText");
 		car1.SetActive(false);
 		car2.SetActive(false);
 		butterfly1.SetActive(false);
 		butterfly2.SetActive(false);
 		zombie1.SetActive(false);
-		zombie2.SetActive(false);
+		zombie2.SetActive(false); 
 	}
 	
 	// Update is called once per frame
@@ -35,46 +45,72 @@ public class IndexScript : MonoBehaviour {
 	}
 
 	public void menuBtnClick() {
-       infoText.GetComponent<TextMesh>().text = "You can now create new objects or destroy created objects.";
+		Debug.Log("Menu button clicked");
+       infoText.GetComponent<TextMesh>().text = "You can now create new objects or " + IndexScript.NewLine + "destroy created objects.";
 	}
 
 	public void createObjBtnClick() {
-		infoText.GetComponent<TextMesh>().text = "Here are the 3 available predefined classes. We will create an object of class you select.";
+		Debug.Log("Create Object button clicked");
+		infoText.GetComponent<TextMesh>().text = "Here are the 3 available predefined classes." + IndexScript.NewLine + 
+		                                         "We will create an object of class you select.";
 	}
 
 	public void destroyObjBtnClick() {
+		Debug.Log("Destroy Object button clicked");
 		infoText.GetComponent<TextMesh>().text = "Work in Progress";
 
 	}
 
 	public void carBtnClick() {
-       if(car1.activeSelf) {
-       	  activeObj[1] = car2;
-       	  car2.SetActive(true);
+		Debug.Log("Create Object > Car button clicked");
+        if(InitScript.activeObj[0]==null) {
+        	InitScript.activeObj[0] = car1;
+        	Debug.Log(InitScript.activeObj[0]);
+       	    car1.SetActive(true);
+       	    car1MethodBtn.SetActive(true);
+       	    infoText.GetComponent<TextMesh>().text = "Car car1 = new Car()";
        } else {
-       	activeObj[0] = car1;
-       	car1.SetActive(true);
+       		InitScript.activeObj[1] = car2;
+       	  	car2.SetActive(true);
+       	  	infoText.GetComponent<TextMesh>().text = "Car car2 = new Car()";
        }
 	}
 
 	public void butterflyBtnClick() {
-        if(butterfly1.activeSelf) {
-       	  activeObj[1] = butterfly2;
-       	  butterfly2.SetActive(true);
+		Debug.Log("Create Object > Butterfly button clicked");
+        if(InitScript.activeObj[0]==null) {
+        	InitScript.activeObj[0] = butterfly1;
+       		butterfly1.SetActive(true);
+       		infoText.GetComponent<TextMesh>().text = "Butterfly butterfly1 = new Butterfly()";
        } else {
-       	activeObj[0] = butterfly1;
-       	butterfly1.SetActive(true);
+       		InitScript.activeObj[1] = butterfly2;
+       	  	butterfly2.SetActive(true);
+       	  	infoText.GetComponent<TextMesh>().text = "Butterfly butterfly2 = new Butterfly()";
        }
 	}
 
 	public void zombieBtnClick() {
-		if(zombie1.activeSelf) {
-       	  activeObj[1] = zombie2;
-       	  zombie2.SetActive(true);
+		Debug.Log("Create Object > Zombie button clicked");
+		if(InitScript.activeObj[0]==null) {
+			InitScript.activeObj[0] = zombie1;
+       		zombie1.SetActive(true);
+       		infoText.GetComponent<TextMesh>().text = "Zombie zombie1 = new Zombie()";
        } else {
-       	activeObj[0] = zombie1;
-       	zombie1.SetActive(true);
+       		InitScript.activeObj[1] = zombie2;
+       	  	zombie2.SetActive(true);
+       	  	infoText.GetComponent<TextMesh>().text = "Zombie zombie2 = new Zombie()";
        }
+	}
+
+	public void car1Accelerate() {
+		Debug.Log("Car1 Methods > Accelerate");
+		car1.GetComponent<Animation>().Play();
+        car1.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+	}
+
+	public void car1Stop() {
+		Debug.Log("Car1 Methods > Stop");
+		car1.GetComponent<Animation>().Stop();
 	}
 
 }
