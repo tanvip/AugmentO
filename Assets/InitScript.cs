@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InitScript : MonoBehaviour {
     public static GameObject[] activeObj = new GameObject[] { null, null};
+    public static UnityEngine.UI.Text infoText;
 	// Use this for initialization
 	void Start () {
 		
